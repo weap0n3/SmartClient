@@ -19,13 +19,24 @@ public partial class MainViewModel: ObservableObject
         this._memory = memory;
     }
 
-
     [ObservableProperty]
     private ObservableCollection<Profile> _profiles;
 
     [RelayCommand]
     private async void Load()
     {
-        Profiles = new ObservableCollection<Profile>(await _memory.GetProfiles());
+        var cached = await _memory.LoadCachedProfilesAsync();
+        Profiles = new ObservableCollection<Profile>(cached);
+
+        await _memory.LoadFromApiProfiles();
+        var updated = await _memory.LoadCachedProfilesAsync();
+
+        if (!cached.Select(p => p.CCID).SequenceEqual(updated.Select(p => p.CCID)))
+        {
+            Profiles = new ObservableCollection<Profile>(updated);
+            System.Diagnostics.Debug.WriteLine("Update");
+        }
+
+
     }
 }
