@@ -1,24 +1,20 @@
-﻿namespace SmartClient.Gui
+﻿using CommunityToolkit.Maui.Behaviors;
+using SmartClient.Core.ViewModels;
+
+namespace SmartClient.Gui
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
-        public MainPage()
+        public MainPage(MainViewModel mainViewModel)
         {
             InitializeComponent();
+            this.BindingContext = mainViewModel;
+            var behavior = new EventToCommandBehavior
+            {
+                EventName = nameof(ContentPage.Appearing),
+                Command = mainViewModel.LoadCommand
+            };
+            Behaviors.Add(behavior);
         }
-
-        private void OnCounterClicked(object? sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
-    }
+    } 
 }
