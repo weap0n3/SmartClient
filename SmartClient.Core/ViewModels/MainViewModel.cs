@@ -2,12 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using SmartClient.Data.Models;
 using SmartClient.Data.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartClient.Core.ViewModels;
 
@@ -25,6 +20,36 @@ public partial class MainViewModel: ObservableObject
     [NotifyCanExecuteChangedFor(nameof(StartAppCommand))]
     [ObservableProperty]
     public Profile _selectedProfile;
+    private bool CanStart => SelectedProfile != null;
+
+    private int index = -1;
+
+    [ObservableProperty]
+    public string _searchQuery;
+
+    partial void OnSearchQueryChanged(string value)
+    {
+        var allprofiles = _memory.LoadCachedProfiles();
+
+        if (SearchQuery == null || SearchQuery == string.Empty)
+        {
+            FilteredProfiles = new ObservableCollection<Profile>(allprofiles); 
+        }
+        else
+        {
+            FilteredProfiles = new ObservableCollection<Profile>
+            (
+                allprofiles.Where
+                (
+                    p => p.Name.ToLower().Contains(SearchQuery.ToLower()) ||
+                    p.Contact.ToLower().Contains(SearchQuery.ToLower()) ||
+                    p.City.ToLower().Contains(SearchQuery.ToLower()) ||
+                    p.Mail.ToLower().Contains(SearchQuery.ToLower())
+                )
+            );
+        }
+    }
+
     partial void OnSelectedProfileChanged(Profile value)
     {
         if (index >= 0)
