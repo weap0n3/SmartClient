@@ -7,6 +7,7 @@
              xmlns:models="clr-namespace:SmartClient.Data.Models;assembly=SmartClient.Data"
              x:Class="SmartClient.Gui.MainPage"
              BackgroundColor="#F4F8EC"
+             xmlns:converters="clr-namespace:SmartClient.Gui.Converters"
              Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
@@ -69,7 +70,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate >
                 <DataTemplate x:DataType="models:Profile">
-                    <Border Style="{StaticResource CardStyle}" BackgroundColor="#fec5bb">
+                    <Border Style="{StaticResource CardStyle}" BackgroundColor="{Binding ColorKey,Converter={StaticResource ResourceKeyToColorConverter}}" >
                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" ColumnSpacing="20">
                             <Label Text="{Binding CCID}" FontSize="14"  TextColor="{StaticResource TextSecondary}"/>
                             <Label Text="{Binding Name}" Grid.Row="1" FontAttributes="Bold" FontSize="21" TextColor="{StaticResource TextMain}"/>

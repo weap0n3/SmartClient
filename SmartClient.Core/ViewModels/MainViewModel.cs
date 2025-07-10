@@ -20,20 +20,34 @@ public partial class MainViewModel: ObservableObject
     }
 
     [ObservableProperty]
-    private ObservableCollection<Profile> _profiles;
+    private ObservableCollection<Profile> _filteredProfiles;
+    [ObservableProperty]
+    public Profile _selectedProfile;
+    partial void OnSelectedProfileChanged(Profile value)
+    {
+        if (index >= 0)
+        {
+            FilteredProfiles[index].ColorKey = "#EEE1B3";
+        }
+        if (SelectedProfile != null)
+        {
+            SelectedProfile.ColorKey = "#38182F";
+        }
+        index = FilteredProfiles.IndexOf(SelectedProfile);
+    }
 
     [RelayCommand]
     private async void Load()
     {
         var cached = await _memory.LoadCachedProfilesAsync();
-        Profiles = new ObservableCollection<Profile>(cached);
+        FilteredProfiles = new ObservableCollection<Profile>(cached);
 
         await _memory.LoadFromApiProfiles();
         var updated = await _memory.LoadCachedProfilesAsync();
 
         if (!cached.Select(p => p.CCID).SequenceEqual(updated.Select(p => p.CCID)))
         {
-            Profiles = new ObservableCollection<Profile>(updated);
+            FilteredProfiles = new ObservableCollection<Profile>(updated);
             System.Diagnostics.Debug.WriteLine("Update");
         }
 

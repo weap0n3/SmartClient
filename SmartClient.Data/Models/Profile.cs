@@ -1,13 +1,20 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartClient.Data.Models;
 
-public class Profile
+public partial class Profile : ObservableObject
 {
+    public Profile()
+    {
+        _ColorKey = "#EEE1B3";
+    }
+
     public string CCID { get; set; }
     public string Name { get; set; }
     public string City { get; set; }
@@ -17,5 +24,8 @@ public class Profile
     public string Ip_Address { get; set; }
     public string Port { get; set; }
     public string Version { get; set; }
+
+    [ObservableProperty]
+    public string _ColorKey;
 }
 
