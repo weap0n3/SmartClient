@@ -54,15 +54,32 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            <Style x:Key="Actionlink" TargetType="Label">
+                <Setter Property="TextColor" Value="#00014E"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="#676AFF"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <converters:ResourceKeyToColorConverter x:Key="ResourceKeyToColorConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*" Margin="10,30,10,0" Padding="10,10,10,0" RowSpacing="30">
         <Button Text="Starten" Style="{StaticResource ActionButton}"  HorizontalOptions="Start"/>
         <CollectionView Grid.Row="1" ItemsSource="{Binding Profiles}" SelectionMode="Single">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding FilteredProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfile}">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="Center">
                     <Label HorizontalOptions="Center" Text="Keine Profile vorhanden" FontFamily="Raleway"  FontSize="50"/>
-                    <Button Text="Add New Event"/>
+                    <Button Text="Add Local Profile"/>
                 </StackLayout>
             </CollectionView.EmptyView>
             <CollectionView.ItemsLayout>
@@ -76,8 +93,8 @@
                             <Label Text="{Binding Name}" Grid.Row="1" FontAttributes="Bold" FontSize="21" TextColor="{StaticResource TextMain}"/>
                             <Label Text="{Binding City}" Grid.RowSpan="2" VerticalOptions="Center" FontSize="17" Grid.Column="1" TextColor="{StaticResource TextMain}" />
                             <Label Text="{Binding Contact}" Grid.Column="2" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
-                            <Label Text="{Binding Tele}" Grid.Column="3" FontSize="17"  />
-                            <Label Text="{Binding Mail}" Grid.Column="3" Grid.Row="1" FontSize="17" />
+                            <Label Text="{Binding Tele}" Grid.Column="3" FontSize="17"  Style="{StaticResource Actionlink}"/>
+                            <Label Text="{Binding Mail}" Grid.Column="3" Grid.Row="1" FontSize="17" Style="{StaticResource Actionlink}" />
                             <Label Text="{Binding Ip_Address}" Grid.Column="4" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
                             <Label Text="{Binding Port}" Grid.Column="5" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
                             <Label Text="{Binding Version}" Grid.Column="6" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
