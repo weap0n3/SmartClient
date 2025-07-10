@@ -10,5 +10,6 @@ namespace SmartClient.Data.Services;
 public interface IMemory
 {
     Task LoadFromApiProfiles();
-    Task<List<Profile>> LoadCachedProfilesAsync();
+    List<Profile> LoadCachedProfiles();
+    Task StartCapHotel(Profile selectedProfile);
 }

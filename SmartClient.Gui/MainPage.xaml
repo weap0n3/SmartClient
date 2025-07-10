@@ -73,8 +73,11 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*" Margin="10,30,10,0" Padding="10,10,10,0" RowSpacing="30">
-        <Button Text="Starten" Style="{StaticResource ActionButton}"  HorizontalOptions="Start"/>
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Profiles}" SelectionMode="Single">
+        <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="20" Margin="70,0,70,0">
+            <Button Text="Starten" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding StartAppCommand}"/>
+            <Button Grid.Column="1" Text="Neu laden" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding LoadCommand}"/>
+            <SearchBar Grid.Column="3" Placeholder="Profile suchen" Text="{Binding SearchQuery}" BackgroundColor="#EEFF86"/>
+        </Grid> 
         <CollectionView Grid.Row="1" ItemsSource="{Binding FilteredProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfile}">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="Center">

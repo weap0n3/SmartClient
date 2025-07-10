@@ -28,7 +28,7 @@ namespace SmartClient.Gui
             #endregion
 
             #region Services
-            var appDataPath = Path.Combine(FileSystem.AppDataDirectory, "profiles.json");
+            var appDataPath = FileSystem.AppDataDirectory;
             System.Diagnostics.Debug.WriteLine(appDataPath); 
             builder.Services.AddSingleton<IMemory>(new MemoryService(appDataPath));
             #endregion

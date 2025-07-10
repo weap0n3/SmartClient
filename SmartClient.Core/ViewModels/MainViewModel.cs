@@ -21,6 +21,8 @@ public partial class MainViewModel: ObservableObject
 
     [ObservableProperty]
     private ObservableCollection<Profile> _filteredProfiles;
+
+    [NotifyCanExecuteChangedFor(nameof(StartAppCommand))]
     [ObservableProperty]
     public Profile _selectedProfile;
     partial void OnSelectedProfileChanged(Profile value)
@@ -39,18 +41,22 @@ public partial class MainViewModel: ObservableObject
     [RelayCommand]
     private async void Load()
     {
-        var cached = await _memory.LoadCachedProfilesAsync();
+        var cached = _memory.LoadCachedProfiles();
         FilteredProfiles = new ObservableCollection<Profile>(cached);
 
         await _memory.LoadFromApiProfiles();
-        var updated = await _memory.LoadCachedProfilesAsync();
+        var updated = _memory.LoadCachedProfiles();
 
         if (!cached.Select(p => p.CCID).SequenceEqual(updated.Select(p => p.CCID)))
         {
             FilteredProfiles = new ObservableCollection<Profile>(updated);
             System.Diagnostics.Debug.WriteLine("Update");
         }
+    }
 
-
+    [RelayCommand(CanExecute = nameof(CanStart))]
+    private void StartApp()
+    {
+        _memory.StartCapHotel(SelectedProfile);
     }
 }
