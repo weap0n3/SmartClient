@@ -8,14 +8,16 @@
              x:Class="SmartClient.Gui.MainPage"
              BackgroundColor="#F4F8EC"
              xmlns:converters="clr-namespace:SmartClient.Gui.Converters"
-             Shell.NavBarIsVisible="False">
+             xmlns:enums="clr-namespace:SmartClient.Data.Enums;assembly=SmartClient.Data"
+             Shell.NavBarIsVisible="False"
+             >
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="CardStyle" TargetType="Border">
                 <Setter Property="StrokeShape" Value="15">
                 </Setter>
-                <Setter Property="Padding" Value="12"/>
+                <Setter Property="Padding" Value="15"/>
                 <Setter Property="Margin" Value="40"/>
                 <Setter Property="Shadow">
                     <Setter.Value>
@@ -69,14 +71,65 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            <Style x:Key="FilterButton" TargetType="Button">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#A4A6FF"/>
+                                    <Setter Property="TextColor" Value="#fff"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="TextColor" Value="#00014E"/>
+                <Setter Property="FontFamily" Value="Raleway"/>
+                <Setter Property="FontSize" Value="Large"/>
+            </Style>
             <converters:ResourceKeyToColorConverter x:Key="ResourceKeyToColorConverter" />
+            <toolkit:EnumToBoolConverter x:Key="AscendingConverter">
+                <toolkit:EnumToBoolConverter.TrueValues>
+                    <enums:FilterMode>Ascending</enums:FilterMode>
+                </toolkit:EnumToBoolConverter.TrueValues>
+            </toolkit:EnumToBoolConverter>
+            <toolkit:EnumToBoolConverter x:Key="DescendingConverter">
+                <toolkit:EnumToBoolConverter.TrueValues>
+                    <enums:FilterMode>Descending</enums:FilterMode>
+                </toolkit:EnumToBoolConverter.TrueValues>
+            </toolkit:EnumToBoolConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid RowDefinitions="Auto,*" Margin="10,30,10,0" Padding="10,10,10,0" RowSpacing="30">
-        <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="20" Margin="70,0,70,0">
-            <Button Text="Starten" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding StartAppCommand}"/>
-            <Button Grid.Column="1" Text="Neu laden" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding LoadCommand}"/>
-            <SearchBar Grid.Column="3" Placeholder="Profile suchen" Text="{Binding SearchQuery}" BackgroundColor="#EEFF86"/>
+    <Grid RowDefinitions="Auto,*" Margin="10,30,10,0" Padding="10,10,10,0" RowSpacing="2">
+        <Grid RowDefinitions="Auto,Auto" RowSpacing="20">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="20" Margin="70,0,70,0">
+                <Button Text="Starten" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding StartAppCommand}"/>
+                <Button Grid.Column="1" Text="Neu laden" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding LoadCommand}"/>
+                <SearchBar Grid.Column="3" Placeholder="Profile suchen" Text="{Binding SearchQuery}" BackgroundColor="#EEFF86"/>
+            </Grid>
+            <Grid ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" Grid.Row="1" ColumnSpacing="20">
+                <HorizontalStackLayout>
+                    <Button Text="Name" Style="{StaticResource FilterButton}" Command="{Binding ToggleFilterCommand}" CommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+                    <Image Source="ascending.png" WidthRequest="25" IsVisible="{Binding NameFilterMode, Converter={StaticResource AscendingConverter}}"/>
+                    <Image Source="descending.png" WidthRequest="25" IsVisible="{Binding NameFilterMode, Converter={StaticResource DescendingConverter}}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="1">
+                    <Button Text="Ort" Style="{StaticResource FilterButton}" Margin="-10,0,0,0" Command="{Binding ToggleFilterCommand}" CommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+                    <Image Source="ascending.png" WidthRequest="25" IsVisible="{Binding OrtFilterMode, Converter={StaticResource AscendingConverter}}"/>
+                    <Image Source="descending.png" WidthRequest="25" IsVisible="{Binding OrtFilterMode, Converter={StaticResource DescendingConverter}}"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="2">
+                    <Button Text="Person" Style="{StaticResource FilterButton}" Margin="-30,0,0,0"  Command="{Binding ToggleFilterCommand}" CommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+                    <Image Source="ascending.png" WidthRequest="25" IsVisible="{Binding PersonFilterMode, Converter={StaticResource AscendingConverter}}"/>
+                    <Image Source="descending.png" WidthRequest="25" IsVisible="{Binding PersonFilterMode, Converter={StaticResource DescendingConverter}}"/>
+                </HorizontalStackLayout>
+                
+                
+            </Grid>
         </Grid> 
         <CollectionView Grid.Row="1" ItemsSource="{Binding FilteredProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfile}">
             <CollectionView.EmptyView>
