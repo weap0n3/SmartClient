@@ -25,6 +25,20 @@ public class MemoryService : IMemory
         this._cachePath = Path.Combine(_appDataPath, "profiles.json");
         this._versionsFolderPath = Path.Combine(_appDataPath, "Versions");
     }
+
+    public async Task DownloadLibs()
+    {
+        var capHotelPath = @"C:\CapHotel";
+        var downloadUrl = "https://www.capcorn.at/update/libraries/caphotel/";
+        string[] libs = { "WebView2Loader.dll", "libcrypto-3.dll", "libssl-3.dll", "mfc140.dll", "vcruntime140.dll", "wkhtmltox.dll" };
+
+        foreach (string lib in libs)
+        {
+            var fileBytes = await _client.GetByteArrayAsync(Path.Combine(downloadUrl, lib));
+            await File.WriteAllBytesAsync(Path.Combine(capHotelPath, lib), fileBytes);
+        }
+    }
+
     public List<Profile> LoadCachedProfiles()
     {
         if (!File.Exists(_cachePath))
@@ -84,11 +98,11 @@ public class MemoryService : IMemory
         string defaultFileName = "CapHotel.exe";
         string rawNeededVersionFile = defaultFileName + "." + selectedProfile.Version;
         string newVersionPath = Path.Combine(@"C:\CapHotel", "CapHotel" + selectedProfile.Version + ".exe");
-        System.Diagnostics.Debug.WriteLine(newVersionPath);
+        
         string filePath = Path.Combine(_versionsFolderPath, rawNeededVersionFile);
         string downloadUrlPath = "https://www.capcorn.at/download";
         List<Profile> profiles = LoadCachedProfiles();
-
+        
         if (!Directory.Exists(_versionsFolderPath))
         {
             Directory.CreateDirectory(_versionsFolderPath);
@@ -99,8 +113,11 @@ public class MemoryService : IMemory
             var fileBytes = await _client.GetByteArrayAsync(Path.Combine(downloadUrlPath,rawNeededVersionFile));
             await File.WriteAllBytesAsync(filePath, fileBytes);
         }
-        File.Copy(filePath, newVersionPath, true);
-
+        if (!File.Exists(newVersionPath))
+        {
+            File.Copy(filePath, newVersionPath, true);
+        }
+        System.Diagnostics.Debug.WriteLine(newVersionPath);
         ProfileBinaryWriter pbw = new ProfileBinaryWriter();
 
         pbw.RewriteToBinary(selectedProfile);

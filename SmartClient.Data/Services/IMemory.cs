@@ -12,4 +12,5 @@ public interface IMemory
     Task LoadFromApiProfiles();
     List<Profile> LoadCachedProfiles();
     Task StartCapHotel(Profile selectedProfile);
+    Task DownloadLibs();
 }
