@@ -5,6 +5,7 @@ using SmartClient.Data.Enums;
 using SmartClient.Data.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
 
 namespace SmartClient.Core.ViewModels;
 
@@ -117,6 +118,13 @@ public partial class MainViewModel: ObservableObject
 
     [ObservableProperty]
     public FilterMode _personFilterMode;
+
+    [RelayCommand]
+    private void Logout()
+    {
+        _memory.DeleteUserData();
+        Shell.Current.GoToAsync("//LoginPage");
+    }
 
     [RelayCommand]
     private void ToggleFilter(string filterQuery)

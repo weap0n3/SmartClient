@@ -9,7 +9,7 @@
              BackgroundColor="#F4F8EC"
              xmlns:converters="clr-namespace:SmartClient.Gui.Converters"
              xmlns:enums="clr-namespace:SmartClient.Data.Enums;assembly=SmartClient.Data"
-             Shell.NavBarIsVisible="False"
+             Shell.BackgroundColor="#F4F8EC"
              >
 
     <ContentPage.Resources>
@@ -104,7 +104,10 @@
             </toolkit:EnumToBoolConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid RowDefinitions="Auto,*" Margin="10,30,10,0" Padding="10,10,10,0" RowSpacing="2">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Abmelden" Command="{Binding LogoutCommand}"/>
+    </ContentPage.ToolbarItems>
+    <Grid RowDefinitions="Auto,*" Margin="10,0,10,0" Padding="10,10,10,0" RowSpacing="2">
         <Grid RowDefinitions="Auto,Auto" RowSpacing="20">
             <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="20" Margin="70,0,70,0">
                 <Button Text="Starten" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding StartAppCommand}"/>
