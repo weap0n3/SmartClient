@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 using SmartClient.Core.ViewModels;
 using SmartClient.Data.Services;
+using SmartClient.Gui.Pages;
 
 namespace SmartClient.Gui
 {
@@ -36,10 +38,13 @@ namespace SmartClient.Gui
                     fonts.AddFont("Inter-VariableFont.ttf", "Inter");
                     fonts.AddFont("Raleway-Bold.ttf", "Raleway-Bold");
                     fonts.AddFont("segoeuithis.ttf", "Segoe UI");
+                    fonts.AddFont("LensGroteskW05-Regular.ttf", "LensGrotesk");
                 });
             #region Pages and ViewModels
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<LoginPage>();
+            builder.Services.AddSingleton<LoginViewModel>();
             #endregion
 
             #region Services
