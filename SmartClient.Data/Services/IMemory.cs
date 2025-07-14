@@ -13,4 +13,7 @@ public interface IMemory
     List<Profile> LoadCachedProfiles();
     Task StartCapHotel(Profile selectedProfile);
     Task DownloadLibs();
+    Task<bool> SaveUserAsync(UserLoginInfo user);
+    Task<UserLoginInfo> LoadUserAsync();
+    void DeleteUserData();
 }
