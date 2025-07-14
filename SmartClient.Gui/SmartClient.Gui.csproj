@@ -70,4 +70,16 @@
 	  <ProjectReference Include="..\SmartClient.Data\SmartClient.Data.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Pages\LoginPage.xaml.cs">
+	    <DependentUpon>LoginPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
