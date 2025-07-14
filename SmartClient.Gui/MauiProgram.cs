@@ -13,6 +13,21 @@ namespace SmartClient.Gui
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .ConfigureLifecycleEvents(events =>
+                {
+#if WINDOWS
+        events.AddWindows(w =>
+                {
+                    w.OnClosed((window,args) =>
+                    {
+                        System.Diagnostics.Debug.WriteLine("Window is being destroyed. Time to clean up files!");
+                        string folderToWatch = @"C:\CapHotel";
+                        var fileCleanerService = new FileCleanerService(folderToWatch);
+                        fileCleanerService.CleanUpNow();
+                    });
+                });
+#endif
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

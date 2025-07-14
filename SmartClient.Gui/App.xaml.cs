@@ -2,10 +2,12 @@
 {
     public partial class App : Application
     {
-        public App()
+        private readonly FileCleanerService _fileCleanerService;
         {
             Application.Current.UserAppTheme = AppTheme.Light;
             InitializeComponent();
+            _fileCleanerService = new FileCleanerService(folderToWatch);
+            _fileCleanerService.Start();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
