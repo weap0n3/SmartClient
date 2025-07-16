@@ -112,7 +112,12 @@
             <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="20" Margin="70,0,70,0">
                 <Button Text="Starten" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding StartAppCommand}"/>
                 <Button Grid.Column="1" Text="Neu laden" Style="{StaticResource ActionButton}"  HorizontalOptions="Start" Command="{Binding LoadCommand}"/>
-                <SearchBar Grid.Column="3" Placeholder="Profile suchen" Text="{Binding SearchQuery}" BackgroundColor="#EEFF86"/>
+                <Border Grid.Column="3" StrokeShape="25" Stroke="{StaticResource CapCornBlue}" WidthRequest="200" Padding="10,0,10,0">
+                    <HorizontalStackLayout>
+                        <Entry Placeholder="Profile suchen" Text="{Binding SearchQuery}" TextColor="{StaticResource CapCornBlue}" PlaceholderColor="#5167e0" VerticalOptions="Center" WidthRequest="150"/>
+                        <Image Source="search.png" HeightRequest="15" HorizontalOptions="End"/>
+                    </HorizontalStackLayout>
+                </Border>
             </Grid>
             <Grid ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" Grid.Row="1" ColumnSpacing="20">
                 <HorizontalStackLayout>
