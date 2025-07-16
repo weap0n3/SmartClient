@@ -6,6 +6,7 @@ using SmartClient.Data.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 
 namespace SmartClient.Core.ViewModels;
 
@@ -29,6 +30,7 @@ public partial class MainViewModel: ObservableObject
     [NotifyCanExecuteChangedFor(nameof(StartAppCommand))]
     [ObservableProperty]
     public Profile _selectedProfile;
+
     private bool CanStart => SelectedProfile != null;
 
     private int index = -1;
@@ -41,7 +43,7 @@ public partial class MainViewModel: ObservableObject
     partial void OnSearchQueryChanged(string value)
     {
         var noneSearch = _memory.LoadCachedProfiles();
-
+        SelectedProfile = null;
         if (SearchQuery == null || SearchQuery == string.Empty)
         {
             FilteredProfiles = new ObservableCollection<Profile>(noneSearch);
@@ -72,11 +74,13 @@ public partial class MainViewModel: ObservableObject
     {
         if (index >= 0)
         {
-            FilteredProfiles[index].ColorKey = "#EEE1B3";
+            FilteredProfiles[index].ColorKey = "#E5E5F0";
+            FilteredProfiles[index].TextColor = "#111111";
         }
         if (SelectedProfile != null)
         {
-            SelectedProfile.ColorKey = "#38182F";
+            SelectedProfile.ColorKey = "#2c48e1";
+            SelectedProfile.TextColor = "#ffffff";
         }
         index = FilteredProfiles.IndexOf(SelectedProfile);
     }
@@ -88,7 +92,7 @@ public partial class MainViewModel: ObservableObject
         var cached = _memory.LoadCachedProfiles();
         AllProfiles = new ObservableCollection<Profile>(cached);
         FilteredProfiles = AllProfiles;
-
+        SelectedProfile = null;
         await _memory.LoadFromApiProfiles();
         var updated = _memory.LoadCachedProfiles();
 

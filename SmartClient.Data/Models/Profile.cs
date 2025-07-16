@@ -12,8 +12,10 @@ public partial class Profile : ObservableObject
 {
     public Profile()
     {
-        _ColorKey = "#EEE1B3";
+        ColorKey = "#E5E5F0";
+        TextColor = "#000000";
     }
+
 
     public string CCID { get; set; }
     public string Name { get; set; }
@@ -27,5 +29,11 @@ public partial class Profile : ObservableObject
 
     [ObservableProperty]
     private bool isPortOpen;
+
+    [ObservableProperty]
+    public string colorKey;
+
+    [ObservableProperty]
+    public string textColor;
 }
 
