@@ -23,9 +23,7 @@ namespace SmartClient.Gui
                     w.OnClosed((window,args) =>
                     {
                         System.Diagnostics.Debug.WriteLine("Window is being destroyed. Time to clean up files!");
-                        string folderToWatch = @"C:\CapHotel";
-                        var fileCleanerService = new FileCleanerService(folderToWatch);
-                        fileCleanerService.CleanUpNow();
+                        FileCleanerService.CleanUpNow();
                     });
                 });
 #endif

@@ -36,6 +36,7 @@ public partial class LoginViewModel : ObservableObject
         if(result)
         {
             await Shell.Current.GoToAsync("//MainPage");
+            FileCleanerService.Start();
         }
         else
         {

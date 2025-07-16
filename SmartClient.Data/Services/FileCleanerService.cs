@@ -5,34 +5,31 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class FileCleanerService
+public static class FileCleanerService
 {
-    private Timer _timer;
-    private readonly string _folderPath;
+    private static Timer _timer;
+    private readonly static string _folderPath = @"C:\CapHotel";
 
-    public FileCleanerService(string folderPath)
-    {
-        _folderPath = folderPath;
-    }
 
-    public void Start()
+
+    public static void  Start()
     {
         _timer = new Timer(async _ => await CleanUpAsync(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
     }
 
-    public void Stop()
+    public static void Stop()
     {
         _timer?.Change(Timeout.Infinite, 0);
         _timer?.Dispose();
     }
 
-    public void CleanUpNow()
+    public static void CleanUpNow()
     {
         _ = CleanUpAsync();
     }
 
 
-    private async Task CleanUpAsync()
+    private static async Task CleanUpAsync()
     {
         var filesToCheck = Directory.GetFiles(_folderPath);
         var regex = new Regex(@"^CapHotel\d+\.exe$", RegexOptions.IgnoreCase);

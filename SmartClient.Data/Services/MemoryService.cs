@@ -28,7 +28,6 @@ public class MemoryService : IMemory
         this._versionsFolderPath = Path.Combine(_appDataPath, "Versions");
         this._loginInfoPath = Path.Combine(_appDataPath, "loginInfo.json");
     }
-
     public async Task DownloadLibs()
     {
         var capHotelPath = @"C:\CapHotel";
@@ -41,7 +40,6 @@ public class MemoryService : IMemory
             await File.WriteAllBytesAsync(Path.Combine(capHotelPath, lib), fileBytes);
         }
     }
-
     public List<Profile> LoadCachedProfiles()
     {
         if (!File.Exists(_cachePath))
@@ -94,7 +92,6 @@ public class MemoryService : IMemory
             System.Diagnostics.Debug.WriteLine(ex.Message);
         }
     }
-
     public async Task StartCapHotel(Profile selectedProfile)
     {
         
@@ -131,7 +128,6 @@ public class MemoryService : IMemory
             UseShellExecute = true
         });
     }
-
     public async Task<bool>SaveUserAsync(UserLoginInfo user)
     {
         DotNetEnv.Env.Load(@"D:\school\APR\SmartClient\.env");
@@ -167,7 +163,6 @@ public class MemoryService : IMemory
             return false;
         }
     }
-
     public async Task<UserLoginInfo> LoadUserAsync()
     {
         if (!File.Exists(_loginInfoPath))

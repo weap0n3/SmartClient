@@ -6,17 +6,12 @@ namespace SmartClient.Gui
 {
     public partial class App : Application
     {
-        private readonly FileCleanerService _fileCleanerService;
         private readonly IMemory _memory;
         private readonly MainViewModel vm;
         public App(MainViewModel vm, IMemory memory)
         {
             Application.Current.UserAppTheme = AppTheme.Light;
             InitializeComponent();
-
-            string folderToWatch = @"C:\CapHotel";
-            _fileCleanerService = new FileCleanerService(folderToWatch);
-            _fileCleanerService.Start();
             this.vm = vm;
             _memory = memory;
         }
@@ -29,6 +24,7 @@ namespace SmartClient.Gui
 
                 // Navigate to MainPage directly
                 await Shell.Current.GoToAsync("//MainPage");
+                FileCleanerService.Start();
             }
             else
             {
