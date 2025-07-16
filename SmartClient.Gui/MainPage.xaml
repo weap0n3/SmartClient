@@ -166,6 +166,9 @@
                             <Image Source="available.png"
                                    Grid.Column="7" Grid.RowSpan="2" 
                                    HeightRequest="30"
+                            <Image Source="{Binding IsPortOpen, Converter={StaticResource PortStatusToImageConverter}}"
+                                       Grid.Column="7" Grid.RowSpan="2" HorizontalOptions="Center"
+                                   HeightRequest="40"
                                    VerticalOptions="Center">
                             </Image>
                         </Grid>
