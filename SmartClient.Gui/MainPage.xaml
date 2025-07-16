@@ -6,92 +6,15 @@
              x:DataType="viewmodels:MainViewModel"
              xmlns:models="clr-namespace:SmartClient.Data.Models;assembly=SmartClient.Data"
              x:Class="SmartClient.Gui.MainPage"
-             BackgroundColor="#F4F8EC"
              xmlns:converters="clr-namespace:SmartClient.Gui.Converters"
              xmlns:enums="clr-namespace:SmartClient.Data.Enums;assembly=SmartClient.Data"
-             Shell.BackgroundColor="#F4F8EC"
+             BackgroundColor="White"
              >
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="CardStyle" TargetType="Border">
-                <Setter Property="StrokeShape" Value="15">
-                </Setter>
-                <Setter Property="Padding" Value="15"/>
-                <Setter Property="Margin" Value="40"/>
-                <Setter Property="Shadow">
-                    <Setter.Value>
-                        <Shadow Brush="Black" Opacity="0.2" Offset="5,5" />
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style x:Key="ActionButton" TargetType="Button">
-                <Setter Property="Shadow">
-                    <Setter.Value>
-                        <Shadow Brush="Black" Opacity="0.2" Offset="5,5" />
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="FontFamily" Value="Raleway-Bold"/>
-                <Setter Property="FontSize" Value="22"/>
-                <Setter Property="WidthRequest" Value="200"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="BackgroundColor" Value="#A4A6FF"/>
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
-                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#676AFF"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-            <Style x:Key="Actionlink" TargetType="Label">
-                <Setter Property="TextColor" Value="#00014E"/>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="TextColor" Value="#676AFF"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-            <Style x:Key="FilterButton" TargetType="Button">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="PointerOver">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#A4A6FF"/>
-                                    <Setter Property="TextColor" Value="#fff"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-                <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="HorizontalOptions" Value="Start"/>
-                <Setter Property="TextColor" Value="#00014E"/>
-                <Setter Property="FontFamily" Value="Raleway"/>
-                <Setter Property="FontSize" Value="Large"/>
-            </Style>
             <converters:ResourceKeyToColorConverter x:Key="ResourceKeyToColorConverter" />
+            <converters:PortStatusToImageConverter x:Key="PortStatusToImageConverter"/>
             <toolkit:EnumToBoolConverter x:Key="AscendingConverter">
                 <toolkit:EnumToBoolConverter.TrueValues>
                     <enums:FilterMode>Ascending</enums:FilterMode>
@@ -153,19 +76,19 @@
                 <DataTemplate x:DataType="models:Profile">
                     <Border Style="{StaticResource CardStyle}" BackgroundColor="{Binding ColorKey,Converter={StaticResource ResourceKeyToColorConverter}}" >
                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" ColumnSpacing="20">
-                            <Label Text="{Binding CCID}" FontSize="14"  TextColor="{StaticResource TextSecondary}"/>
-                            <Label Text="{Binding Name}" Grid.Row="1" FontAttributes="Bold" FontSize="21" TextColor="{StaticResource TextMain}"/>
-                            <Label Text="{Binding City}" Grid.RowSpan="2" VerticalOptions="Center" FontSize="17" Grid.Column="1" TextColor="{StaticResource TextMain}" />
-                            <Label Text="{Binding Contact}" Grid.Column="2" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
-                            <Label Text="{Binding Tele}" Grid.Column="3" FontSize="17"  Style="{StaticResource Actionlink}"/>
-                            <Label Text="{Binding Mail}" Grid.Column="3" Grid.Row="1" FontSize="17" Style="{StaticResource Actionlink}" />
-                            <Label Text="{Binding Ip_Address}" Grid.Column="4" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
-                            <Label Text="{Binding Port}" Grid.Column="5" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
-                            <Label Text="{Binding Version}" Grid.Column="6" Grid.RowSpan="2" FontSize="17" VerticalOptions="Center" TextColor="{StaticResource TextMain}" />
-
-                            <Image Source="available.png"
-                                   Grid.Column="7" Grid.RowSpan="2" 
-                                   HeightRequest="30"
+                            <Label Text="{Binding CCID}" FontSize="14"  TextColor="{StaticResource TextSecondary}" FontFamily="LensGrotesk"/>
+                            <Label Text="{Binding Name}" Grid.Row="1" FontAttributes="Bold" FontSize="25" TextColor="{Binding TextColor}" FontFamily="LensGrotesk"/>
+                            <Label Text="{Binding City}" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource ProfileText}"/>
+                            <Label Text="{Binding Contact}" Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource ProfileText}"/>
+                            <Label Text="{Binding Tele}" Grid.Column="3" FontSize="19"  Style="{StaticResource Actionlink}"/>
+                            <Label x:Name="EmailLabel" Text="{Binding Mail}" Grid.Column="3" Grid.Row="1" FontSize="19" Style="{StaticResource Actionlink}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnEmailTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="{Binding Ip_Address}" Grid.Column="4" Grid.RowSpan="2" Style="{StaticResource ProfileText}" />
+                            <Label Text="{Binding Port}" Grid.Column="5" Grid.RowSpan="2" Style="{StaticResource ProfileText}"/>
+                            <Label Text="{Binding Version}" Grid.Column="6" Grid.RowSpan="2" Style="{StaticResource ProfileText}"/>
                             <Image Source="{Binding IsPortOpen, Converter={StaticResource PortStatusToImageConverter}}"
                                        Grid.Column="7" Grid.RowSpan="2" HorizontalOptions="Center"
                                    HeightRequest="40"

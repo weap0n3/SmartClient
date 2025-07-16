@@ -4,6 +4,104 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+
+    <Style TargetType="Label" x:Key="ProfileText">
+        <Setter Property="FontSize" Value="19"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="{Binding TextColor}"/>
+        <Setter Property="FontFamily" Value="LensGrotesk"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+    </Style>
+    
+    <Style x:Key="CardStyle" TargetType="Border">
+        <Setter Property="StrokeShape" Value="15"/>
+        <Setter Property="Stroke" Value="{StaticResource CapCornBlue}"/>
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Margin" Value="40"/>
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="Black" Opacity="0.2" Offset="5,5" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ActionButton" TargetType="Button">
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="Black" Opacity="0.2" Offset="5,5" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="LensGrotesk"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="WidthRequest" Value="200"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="BackgroundColor" Value="white"/>
+        <Setter Property="TextColor" Value="{StaticResource CapCornBlue}"/>
+        <Setter Property="CornerRadius" Value="25"/>
+        <Setter Property="HeightRequest" Value="50"/>
+        <Setter Property="BorderColor" Value="{StaticResource CapCornBlue}"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource CapCornBlue}"/>
+                            <Setter Property="TextColor" Value="white"/>
+                            <Setter Property="BorderColor" Value="Transparent"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+    <Style x:Key="Actionlink" TargetType="Label">
+        <Setter Property="FontSize" Value="19"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="{Binding TextColor}"/>
+        <Setter Property="FontFamily" Value="LensGrotesk"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="#676AFF"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+    <Style x:Key="FilterButton" TargetType="Button">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource CapCornBlue}"/>
+                            <Setter Property="TextColor" Value="#fff"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="TextColor" Value="#00014E"/>
+        <Setter Property="FontFamily" Value="LensGrotesk"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="Large"/>
+    </Style>
+
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>
