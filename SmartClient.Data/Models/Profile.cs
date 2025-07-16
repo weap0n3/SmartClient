@@ -26,6 +26,6 @@ public partial class Profile : ObservableObject
     public string Version { get; set; }
 
     [ObservableProperty]
-    public string _ColorKey;
+    private bool isPortOpen;
 }
 

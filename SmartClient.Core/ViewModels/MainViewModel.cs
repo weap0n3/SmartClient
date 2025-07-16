@@ -12,9 +12,12 @@ namespace SmartClient.Core.ViewModels;
 public partial class MainViewModel: ObservableObject
 {
     private readonly IMemory _memory;
+    private readonly PortChecker _portChecker;
     public MainViewModel(IMemory memory)
     {
         this._memory = memory;
+        this._portChecker = new PortChecker(_memory);
+        //_portChecker.Start();
     }
 
     [ObservableProperty]
@@ -96,6 +99,8 @@ public partial class MainViewModel: ObservableObject
         }
 
         FilteredProfiles = AllProfiles;
+        
+        //_portChecker.profiles = FilteredProfiles.ToList();
     }
 
     [RelayCommand(CanExecute = nameof(CanStart))]
