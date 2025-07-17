@@ -11,7 +11,7 @@ namespace SmartClient.Data.Services;
 
 public class PortChecker
 {
-    public List<Profile> profiles;
+    public List<ProfileUI> profiles;
     private readonly CancellationTokenSource _cts = new();
     private readonly IMemory memory;
     public PortChecker(IMemory memory)
