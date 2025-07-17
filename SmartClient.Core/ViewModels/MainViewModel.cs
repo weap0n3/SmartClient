@@ -22,14 +22,14 @@ public partial class MainViewModel: ObservableObject
     }
 
     [ObservableProperty]
-    private ObservableCollection<Profile> _filteredProfiles;
+    private ObservableCollection<ProfileUI> _filteredProfiles;
 
     [ObservableProperty]
-    private ObservableCollection<Profile> _allProfiles;
+    private ObservableCollection<ProfileUI> _allProfiles;
 
     [NotifyCanExecuteChangedFor(nameof(StartAppCommand))]
     [ObservableProperty]
-    public Profile _selectedProfile;
+    public ProfileUI _selectedProfile;
 
     private bool CanStart => SelectedProfile != null;
 
@@ -46,14 +46,14 @@ public partial class MainViewModel: ObservableObject
         SelectedProfile = null;
         if (SearchQuery == null || SearchQuery == string.Empty)
         {
-            FilteredProfiles = new ObservableCollection<Profile>(noneSearch);
+            FilteredProfiles = new ObservableCollection<ProfileUI>(ProfileMapper.ListToUI(noneSearch));
             NameFilterMode = FilterMode.None;
             OrtFilterMode = FilterMode.None;
             PersonFilterMode = FilterMode.None;
         }
         else
         {
-            FilteredProfiles = new ObservableCollection<Profile>
+            FilteredProfiles = new ObservableCollection<ProfileUI>
             (
                 AllProfiles.Where
                 (
@@ -70,7 +70,7 @@ public partial class MainViewModel: ObservableObject
         }
     }
 
-    partial void OnSelectedProfileChanged(Profile value)
+    partial void OnSelectedProfileChanged(ProfileUI value)
     {
         if (index >= 0)
         {
@@ -90,7 +90,7 @@ public partial class MainViewModel: ObservableObject
     {
         _memory.DownloadLibs();
         var cached = _memory.LoadCachedProfiles();
-        AllProfiles = new ObservableCollection<Profile>(cached);
+        AllProfiles = new ObservableCollection<ProfileUI>(ProfileMapper.ListToUI(cached));
         FilteredProfiles = AllProfiles;
         SelectedProfile = null;
         await _memory.LoadFromApiProfiles();
@@ -98,7 +98,7 @@ public partial class MainViewModel: ObservableObject
 
         if (!cached.Select(p => p.CCID).SequenceEqual(updated.Select(p => p.CCID)))
         {
-            AllProfiles = new ObservableCollection<Profile>(updated);
+            AllProfiles = new ObservableCollection<ProfileUI>(ProfileMapper.ListToUI(updated));
             System.Diagnostics.Debug.WriteLine("Update");
         }
 
@@ -110,13 +110,13 @@ public partial class MainViewModel: ObservableObject
     [RelayCommand(CanExecute = nameof(CanStart))]
     private void StartApp()
     {
-        _memory.StartCapHotel(SelectedProfile);
+        _memory.StartCapHotel(ProfileMapper.ToData(SelectedProfile));
     }
     private readonly Dictionary<string, FilterMode> _filterModes = new()
     {
         { "Name", FilterMode.None },
-        { "Ort", FilterMode.None },
-        { "Person", FilterMode.None }
+        { "City", FilterMode.None },
+        { "Contact", FilterMode.None }
     };
 
     [ObservableProperty]
@@ -146,37 +146,18 @@ public partial class MainViewModel: ObservableObject
             FilterMode.Ascending => FilterMode.None ,
             _ => FilterMode.None
         };
-        switch (filterQuery)
+        var property = typeof(ProfileUI).GetProperty(filterQuery);
+
+        AllProfiles = _filterModes[filterQuery] switch
         {
-            case "Name":
-                AllProfiles = _filterModes["Name"] switch
-                {
-                    FilterMode.Ascending => new ObservableCollection<Profile>(FilteredProfiles.OrderBy(p => p.Name)),
-                    FilterMode.Descending => new ObservableCollection<Profile>(FilteredProfiles.OrderByDescending(p => p.Name)),
-                    FilterMode.None => new ObservableCollection<Profile>(noneFilter)
-                };
-                break;
-            case "Ort":
-                AllProfiles = _filterModes["Ort"] switch
-                {
-                    FilterMode.Ascending => new ObservableCollection<Profile>(FilteredProfiles.OrderBy(p => p.City)),
-                    FilterMode.Descending => new ObservableCollection<Profile>(FilteredProfiles.OrderByDescending(p => p.City)),
-                    FilterMode.None => new ObservableCollection<Profile>(noneFilter)
-                };
-                break;
-            case "Person":
-                AllProfiles = _filterModes["Person"] switch
-                {
-                    FilterMode.Ascending => new ObservableCollection<Profile>(FilteredProfiles.OrderBy(p => p.Contact)),
-                    FilterMode.Descending => new ObservableCollection<Profile>(FilteredProfiles.OrderByDescending(p => p.Contact)),
-                    FilterMode.None => new ObservableCollection<Profile>(noneFilter)
-                };
-                break;
-        }
+            FilterMode.Ascending => new ObservableCollection<ProfileUI>(FilteredProfiles.OrderBy(p => property.GetValue(p))),
+            FilterMode.Descending => new ObservableCollection<ProfileUI>(FilteredProfiles.OrderByDescending(p => property.GetValue(p))),
+            FilterMode.None => new ObservableCollection<ProfileUI>(ProfileMapper.ListToUI(noneFilter))
+        };
 
         NameFilterMode = _filterModes["Name"];
-        OrtFilterMode = _filterModes["Ort"];
-        PersonFilterMode = _filterModes["Person"];
+        OrtFilterMode = _filterModes["City"];
+        PersonFilterMode = _filterModes["Contact"];
         FilteredProfiles = AllProfiles;
     }
 }
