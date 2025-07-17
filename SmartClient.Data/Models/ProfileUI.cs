@@ -16,7 +16,7 @@ public partial class ProfileUI : ObservableObject
         ColorKey = "#E5E5F0";
         TextColor = "#000000";
     }
-
+    public string CCID => profile.CCID;
     public string Name => profile.Name;
     public string Contact => profile.Contact;
     public string City => profile.City;
