@@ -8,15 +8,8 @@ using System.Threading.Tasks;
 
 namespace SmartClient.Data.Models;
 
-public partial class Profile : ObservableObject
+public class Profile
 {
-    public Profile()
-    {
-        ColorKey = "#E5E5F0";
-        TextColor = "#000000";
-    }
-
-
     public string CCID { get; set; }
     public string Name { get; set; }
     public string City { get; set; }
@@ -26,14 +19,5 @@ public partial class Profile : ObservableObject
     public string Ip_Address { get; set; }
     public string Port { get; set; }
     public string Version { get; set; }
-
-    [ObservableProperty]
-    private bool isPortOpen;
-
-    [ObservableProperty]
-    public string colorKey;
-
-    [ObservableProperty]
-    public string textColor;
 }
 
