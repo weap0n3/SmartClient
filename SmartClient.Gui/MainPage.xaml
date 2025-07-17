@@ -44,24 +44,22 @@
             </Grid>
             <Grid ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" Grid.Row="1" ColumnSpacing="20">
                 <HorizontalStackLayout>
-                    <Button Text="Name" Style="{StaticResource FilterButton}" Command="{Binding ToggleFilterCommand}" CommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+                    <Button Text="Name" Style="{StaticResource FilterButton}" Command="{Binding ToggleFilterCommand}" CommandParameter="Name"/>
                     <Image Source="ascending.png" WidthRequest="25" IsVisible="{Binding NameFilterMode, Converter={StaticResource AscendingConverter}}"/>
                     <Image Source="descending.png" WidthRequest="25" IsVisible="{Binding NameFilterMode, Converter={StaticResource DescendingConverter}}"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Column="1">
-                    <Button Text="Ort" Style="{StaticResource FilterButton}" Margin="-10,0,0,0" Command="{Binding ToggleFilterCommand}" CommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+                    <Button Text="Ort" Style="{StaticResource FilterButton}" Margin="-10,0,0,0" Command="{Binding ToggleFilterCommand}" CommandParameter="City"/>
                     <Image Source="ascending.png" WidthRequest="25" IsVisible="{Binding OrtFilterMode, Converter={StaticResource AscendingConverter}}"/>
                     <Image Source="descending.png" WidthRequest="25" IsVisible="{Binding OrtFilterMode, Converter={StaticResource DescendingConverter}}"/>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout Grid.Column="2">
-                    <Button Text="Person" Style="{StaticResource FilterButton}" Margin="-30,0,0,0"  Command="{Binding ToggleFilterCommand}" CommandParameter="{Binding Text, Source={RelativeSource Self}}"/>
+                    <Button Text="Person" Style="{StaticResource FilterButton}" Margin="-30,0,0,0"  Command="{Binding ToggleFilterCommand}" CommandParameter="Contact"/>
                     <Image Source="ascending.png" WidthRequest="25" IsVisible="{Binding PersonFilterMode, Converter={StaticResource AscendingConverter}}"/>
                     <Image Source="descending.png" WidthRequest="25" IsVisible="{Binding PersonFilterMode, Converter={StaticResource DescendingConverter}}"/>
                 </HorizontalStackLayout>
-                
-                
             </Grid>
-        </Grid> 
+        </Grid>
         <CollectionView Grid.Row="1" ItemsSource="{Binding FilteredProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfile}">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="Center">
@@ -73,7 +71,7 @@
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate >
-                <DataTemplate x:DataType="models:Profile">
+                <DataTemplate x:DataType="models:ProfileUI">
                     <Border Style="{StaticResource CardStyle}" BackgroundColor="{Binding ColorKey,Converter={StaticResource ResourceKeyToColorConverter}}" >
                         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" ColumnSpacing="20">
                             <Label Text="{Binding CCID}" FontSize="14"  TextColor="{StaticResource TextSecondary}" FontFamily="LensGrotesk"/>
