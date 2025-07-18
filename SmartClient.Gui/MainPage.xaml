@@ -43,18 +43,21 @@
                     </HorizontalStackLayout>
                 </Border>
             </Grid>
-            <Grid ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" Grid.Row="1" ColumnSpacing="20">
+            <Grid ColumnDefinitions="1.85*,*,*,1.5*,*,Auto,Auto,0.78*" Grid.Row="1" ColumnSpacing="20">
                 <controls:FilterButton LabelText="Name" Command="{Binding ToggleFilterCommand}" CommandParameter="Name" 
                     ImageAVisible="{Binding NameFilterMode,Converter={StaticResource AscendingConverter}}"
                     ImageDVisible="{Binding NameFilterMode,Converter={StaticResource DescendingConverter}}"/>
 
-                <controls:FilterButton Margin="-15,0,0,0" Grid.Column="1" LabelText="Ort" Command="{Binding ToggleFilterCommand}" CommandParameter="City" 
+                <controls:FilterButton Grid.Column="1" LabelText="Ort" Command="{Binding ToggleFilterCommand}" CommandParameter="City" 
                     ImageAVisible="{Binding OrtFilterMode,Converter={StaticResource AscendingConverter}}"
                     ImageDVisible="{Binding OrtFilterMode,Converter={StaticResource DescendingConverter}}"/>
 
-                <controls:FilterButton Margin="-35,0,0,0" Grid.Column="2" LabelText="Kontakt" Command="{Binding ToggleFilterCommand}" CommandParameter="Contact" 
+                <controls:FilterButton Grid.Column="2" LabelText="Kontakt" Command="{Binding ToggleFilterCommand}" CommandParameter="Contact" 
                     ImageAVisible="{Binding PersonFilterMode,Converter={StaticResource AscendingConverter}}"
                     ImageDVisible="{Binding PersonFilterMode,Converter={StaticResource DescendingConverter}}"/>
+                <controls:FilterButton Margin="0,0,0,0" Grid.Column="6" LabelText="Version" Command="{Binding ToggleFilterCommand}" CommandParameter="Version" 
+                    ImageAVisible="{Binding VersionFilterMode,Converter={StaticResource AscendingConverter}}"
+                    ImageDVisible="{Binding VersionFilterMode,Converter={StaticResource DescendingConverter}}"/>
             </Grid>
         </Grid>
         <CollectionView Grid.Row="1" ItemsSource="{Binding FilteredProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfile}">
@@ -70,7 +73,7 @@
             <CollectionView.ItemTemplate >
                 <DataTemplate x:DataType="models:ProfileUI">
                     <Border Style="{StaticResource CardStyle}" BackgroundColor="{Binding ColorKey,Converter={StaticResource ResourceKeyToColorConverter}}" >
-                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="2*,*,*,1.5*,*,Auto,Auto,*" ColumnSpacing="20">
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="2*,*,*,1.5*,*,auto,0.35*,*" ColumnSpacing="20">
                             <Label Text="{Binding CCID}" FontSize="14"  TextColor="{StaticResource TextSecondary}" FontFamily="LensGrotesk"/>
                             <Label Text="{Binding Name}" Grid.Row="1" FontAttributes="Bold" FontSize="25" TextColor="{Binding TextColor}" FontFamily="LensGrotesk"/>
                             <Label Text="{Binding City}" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource ProfileText}"/>
@@ -83,7 +86,7 @@
                             </Label>
                             <Label Text="{Binding Ip_Address}" Grid.Column="4" Grid.RowSpan="2" Style="{StaticResource ProfileText}" />
                             <Label Text="{Binding Port}" Grid.Column="5" Grid.RowSpan="2" Style="{StaticResource ProfileText}"/>
-                            <Label Text="{Binding Version}" Grid.Column="6" Grid.RowSpan="2" Style="{StaticResource ProfileText}"/>
+                            <Label Text="{Binding Version}" Grid.Column="6" Grid.RowSpan="2" Style="{StaticResource ProfileText}" HorizontalOptions="End"/>
                             <Image Source="{Binding IsPortOpen, Converter={StaticResource PortStatusToImageConverter}}"
                                        Grid.Column="7" Grid.RowSpan="2" HorizontalOptions="Center"
                                    HeightRequest="40"

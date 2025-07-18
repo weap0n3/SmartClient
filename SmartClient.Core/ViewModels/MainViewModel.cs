@@ -50,6 +50,7 @@ public partial class MainViewModel: ObservableObject
             NameFilterMode = FilterMode.None;
             OrtFilterMode = FilterMode.None;
             PersonFilterMode = FilterMode.None;
+            VersionFilterMode = FilterMode.None;
         }
         else
         {
@@ -116,7 +117,8 @@ public partial class MainViewModel: ObservableObject
     {
         { "Name", FilterMode.None },
         { "City", FilterMode.None },
-        { "Contact", FilterMode.None }
+        { "Contact", FilterMode.None },
+        { "Version",FilterMode.None }
     };
     
     [ObservableProperty]
@@ -127,6 +129,9 @@ public partial class MainViewModel: ObservableObject
 
     [ObservableProperty]
     public FilterMode _personFilterMode;
+
+    [ObservableProperty]
+    public FilterMode _versionFilterMode;
 
     [RelayCommand]
     private void Logout()
@@ -158,6 +163,7 @@ public partial class MainViewModel: ObservableObject
         NameFilterMode = _filterModes["Name"];
         OrtFilterMode = _filterModes["City"];
         PersonFilterMode = _filterModes["Contact"];
+        VersionFilterMode = _filterModes["Version"];
         FilteredProfiles = AllProfiles;
     }
 }
