@@ -1,0 +1,29 @@
+<ContentView
+    x:Class="SmartClient.Gui.UI.FilterButton"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:SmartClient.Gui.Converters"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:enums="clr-namespace:SmartClient.Data.Enums;assembly=SmartClient.Data"
+    xmlns:local="clr-namespace:SmartClient.Gui.UI"
+    x:Name="Root">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <toolkit:EnumToBoolConverter x:Key="AscendingConverter">
+                <toolkit:EnumToBoolConverter.TrueValues>
+                    <enums:FilterMode>Ascending</enums:FilterMode>
+                </toolkit:EnumToBoolConverter.TrueValues>
+            </toolkit:EnumToBoolConverter>
+            <toolkit:EnumToBoolConverter x:Key="DescendingConverter">
+                <toolkit:EnumToBoolConverter.TrueValues>
+                    <enums:FilterMode>Descending</enums:FilterMode>
+                </toolkit:EnumToBoolConverter.TrueValues>
+            </toolkit:EnumToBoolConverter>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <HorizontalStackLayout>
+        <Button x:Name="ButtonControl" Style="{StaticResource FilterButton}"/>
+        <Image x:Name="ImageAControl" Source="ascending.png" WidthRequest="25" IsVisible="False"/>
+        <Image x:Name="ImageDControl" Source="descending.png" WidthRequest="25" IsVisible="False" />
+    </HorizontalStackLayout>
+</ContentView>
