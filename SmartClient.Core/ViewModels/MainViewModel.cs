@@ -118,7 +118,7 @@ public partial class MainViewModel: ObservableObject
         { "City", FilterMode.None },
         { "Contact", FilterMode.None }
     };
-
+    
     [ObservableProperty]
     public FilterMode _nameFilterMode;
 
